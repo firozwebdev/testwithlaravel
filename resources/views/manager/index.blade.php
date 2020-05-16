@@ -21,8 +21,7 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->email }}</td>
                         <td>{{ $item->position }}</td>
-                        <td><a class="btn btn-warning" href=" {{ route('managers.edit', $item->id) }}">Edit</a> | 
-                            <a class="btn btn-warning" href=" {{ route('managers.edit', $item->id) }}">Change</a> |
+                        <td><a class="btn btn-warning" href=" {{ route('managers.edit', $item->id) }}">Edit</a> |
                             <form style="display:inline" action="{{ route('managers.destroy',$item->id) }}" method="post">
                                 @csrf
                                 @method('delete')

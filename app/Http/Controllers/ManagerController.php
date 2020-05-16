@@ -141,7 +141,7 @@ class ManagerController extends Controller
                 $pmanager->position = $manager->position;
                 $pmanager->save();
             }
-            $pmanager->position = $position;
+           
             $manager->name = $request->name;
             $manager->email = $request->email;
             $manager->position = $request->position;
