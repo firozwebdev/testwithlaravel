@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('users', 'UserController');
+//Route::resource('users', 'UserController');
 //Route::resource('managers', 'ManagerController');
 
 Auth::routes();
@@ -28,11 +28,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
     Route::resource('managers', 'ManagerController');
-    Route::post('admin/logout','AdminController@logout')->name('admin.logout');
-    // Route::get('admin-register','AdminController@register')->name('admin.register');
-    // Route::post('admin-register','AdminController@adminRegister')->name('admin.register.post');
-
+    Route::post('logout','Admin\AdminLoginController@logout')->name('admin.logout');
 });
 
-Route::get('/admin/login', 'Admin\Auth\LoginController@adminLogin')->name('admin.login');
+Route::group(['prefix'=>'manager','middleware'=>'auth:manager'],function (){
+    Route::resource('users', 'UserController');
+    Route::post('logout','Manager\ManagerLoginController@logout')->name('manager.logout');
+});
+
+Route::get('/admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
 Route::post('/admin/login','Admin\Auth\LoginController@login')->name('admin.login');
+
+Route::get('/manager/login', 'Manager\Auth\LoginController@showLoginForm')->name('manager.login');
+Route::post('/manager/login','Manager\Auth\LoginController@login')->name('manager.login');

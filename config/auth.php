@@ -2,6 +2,7 @@
 
 use App\User;
 use App\Admin;
+use App\Manager;
 
 return [
 
@@ -48,6 +49,11 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        
+        'manager' => [
+            'driver' => 'session',
+            'provider' => 'managers',
+        ],
 
         'api' => [
             'driver' => 'token',
@@ -83,6 +89,11 @@ return [
             'driver' => 'eloquent',
             'model' => Admin::class,
         ],
+        
+        'managers' => [
+            'driver' => 'eloquent',
+            'model' => Manager::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -115,6 +126,13 @@ return [
 
         'admins' => [
             'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        
+        'managers' => [
+            'provider' => 'managers',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

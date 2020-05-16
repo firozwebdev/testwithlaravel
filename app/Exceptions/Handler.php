@@ -64,7 +64,10 @@ class Handler extends ExceptionHandler
 
         switch ($guard) {
             case 'admin':
-                $login = 'admin.login.get';
+                $login = 'admin.login';
+                break;
+            case 'manager':
+                $login = 'manager.login';
                 break;
             default:
                 $login = 'login';

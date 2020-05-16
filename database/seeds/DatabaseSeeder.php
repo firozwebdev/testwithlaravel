@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UserSeeder::class);
         factory(App\User::class, 10)->create();
-        //factory(App\Manager::class, 5)->create();
+        factory(App\Manager::class, 1)->create();
         factory(App\Admin::class, 1)->create();
 
         $managerA= new Manager();
