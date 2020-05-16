@@ -28,7 +28,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
     Route::resource('managers', 'ManagerController');
-    // Route::get('admin-logout','AdminController@logout')->name('admin.logout');
+    Route::post('admin/logout','AdminController@logout')->name('admin.logout');
     // Route::get('admin-register','AdminController@register')->name('admin.register');
     // Route::post('admin-register','AdminController@adminRegister')->name('admin.register.post');
 
