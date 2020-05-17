@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Manager;
 
-use App\Manager;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class ManagerController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,8 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        $managers = Manager::all();
-        return view('manager.index', compact('managers'));
+        $users = User::all(); 
+        return view('user.index',compact('users'));
     }
 
     /**
@@ -26,7 +27,7 @@ class ManagerController extends Controller
      */
     public function create()
     {
-        return view('manager.create');
+        return view('user.create');
     }
 
     /**
@@ -37,21 +38,18 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
-
-        //dd($request->all());
+              
         try{
             $message = [
                 'name.required' => 'User name is required',
                 'email.required' => 'Email name is required',
-                'position.required' => 'Email name is required',
                 
                 'email.unique' => 'Email already exists, try new one !',
                 
             ];
             $rules = [
                 'name' => 'required',
-                'email' => 'required|unique:admins',
-                'position' => 'required'
+                'email' => 'required|unique:users'
                 
                 //'createdBy' => 'required',
             ];
@@ -62,29 +60,29 @@ class ManagerController extends Controller
 
            
 
-            $manager = new Manager();
-            $manager->name = $request->name;
-            $manager->email = $request->email;
-            $manager->position = $request->position;
-            $manager->password = bcrypt('sabuz123');
-            $manager->save();
-            alert()->success('Manager Created');
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt('sabuz123');
+            $user->save();
+            alert()->success('User Created');
 
-            return redirect()->route('managers.index');
+            return redirect()->route('users.index');
 
         }catch(\Exception $e){
             return $e->getMessage();
         }
+
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Manager  $manager
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Manager $manager)
+    public function show($id)
     {
         //
     }
@@ -92,38 +90,37 @@ class ManagerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Manager  $manager
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $manager = Manager::findOrFail($id);
-        return view('manager.edit', compact('manager'));
+        $user = User::findOrFail($id);
+        
+        return view('user.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Manager  $manager
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
+       
         try{
             $message = [
-                'name.required' => 'Manager name is required',
+                'name.required' => 'User name is required',
                 'email.required' => 'Email name is required',
-                'position.required' => 'Position name is required',
                 
-                
-               
+                'email.unique' => 'Email already exists, try new one !',
                 
             ];
             $rules = [
                 'name' => 'required',
-                'email' => 'required',
-                'position' => 'required'
+                'email' => 'required'
                 
                 //'createdBy' => 'required',
             ];
@@ -134,41 +131,32 @@ class ManagerController extends Controller
 
            
 
-            $manager = Manager::findOrFail($id);
-            $position = $request->position;
-            $pmanager = Manager::where('position',$position)->first();
-            if($pmanager){
-                $pmanager->position = $manager->position;
-                $pmanager->save();
-            }
-           
-            $manager->name = $request->name;
-            $manager->email = $request->email;
-            $manager->position = $request->position;
-            $manager->save();
-            
-            
-           
-            alert()->success('Manager Updated');
+            $user = User::findOrFail($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+            alert()->success('User Updated');
 
-            return redirect()->route('managers.index');
+            return redirect()->route('users.index');
 
         }catch(\Exception $e){
             return $e->getMessage();
         }
+        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Manager  $manager
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $manager = Manager::findOrFail($id);
-        $manager->delete();
-        alert()->success('Manager Delete');
-        return redirect()->route('managers.index');
+        $user = User::findOrFail($id);
+        $user->delete();
+        alert()->success('User Delete');
+        return redirect()->route('users.index');
+
     }
 }

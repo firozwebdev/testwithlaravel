@@ -26,18 +26,45 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
+Route::group(['prefix'=>'admin'],function (){
     Route::resource('managers', 'ManagerController');
-    Route::post('logout','Admin\AdminLoginController@logout')->name('admin.logout');
+
+    Route::group(['namespace'=>'Admin'], function(){
+
+       Route::group(['middleware'=>'auth:admin'],function (){
+            Route::resource('managers', 'ManagerController');
+            Route::post('logout','AdminLoginController@logout')->name('admin.logout');
+        });
+
+        Route::group(['as'=>'admin.','namespace'=>'Auth'],function (){
+            Route::get('/login', 'LoginController@showLoginForm')->name('login');
+            Route::post('/login','LoginController@login')->name('login');
+    
+        });
+
+    });
+   
 });
 
-Route::group(['prefix'=>'manager','middleware'=>'auth:manager'],function (){
-    Route::resource('users', 'UserController');
-    Route::post('logout','Manager\ManagerLoginController@logout')->name('manager.logout');
+
+
+Route::group(['prefix'=>'manager',],function (){
+
+    Route::group(['namespace'=>'Manager'], function(){
+
+        Route::group(['middleware'=>'auth:manager'],function (){
+            Route::resource('users', 'UserController');
+            Route::post('logout','ManagerLoginController@logout')->name('manager.logout');
+        });
+
+        Route::group(['as'=>'manager.','namespace'=>'Auth'],function (){
+            Route::get('login', 'LoginController@showLoginForm')->name('login');
+            Route::post('login','LoginController@login')->name('login');
+        });
+    });
+    
 });
 
-Route::get('/admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
-Route::post('/admin/login','Admin\Auth\LoginController@login')->name('admin.login');
 
-Route::get('/manager/login', 'Manager\Auth\LoginController@showLoginForm')->name('manager.login');
-Route::post('/manager/login','Manager\Auth\LoginController@login')->name('manager.login');
+
+
