@@ -44,15 +44,17 @@ class ManagerController extends Controller
             $message = [
                 'name.required' => 'User name is required',
                 'email.required' => 'Email name is required',
-                'position.required' => 'Email name is required',
-                
                 'email.unique' => 'Email already exists, try new one !',
+                'position.required' => 'Email name is required',
+                'position.unique' => 'This postion has already been assigned',
+                
+                
                 
             ];
             $rules = [
                 'name' => 'required',
                 'email' => 'required|unique:admins',
-                'position' => 'required'
+                'position' => 'required|unique:managers'
                 
                 //'createdBy' => 'required',
             ];
