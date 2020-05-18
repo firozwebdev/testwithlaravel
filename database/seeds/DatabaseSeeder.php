@@ -1,6 +1,7 @@
 <?php
 
 use App\Manager;
+use App\Category;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -37,5 +38,12 @@ class DatabaseSeeder extends Seeder
         $managerC->position = "3";
         $managerC->password = bcrypt('sabuz123');
         $managerC->save();
+
+
+        Category::create(['name' => 'A']);
+        Category::create(['name' => 'B']);
+        Category::create(['name' => 'C']);
+
+        factory(App\Post::class, 100)->create();
     }
 }

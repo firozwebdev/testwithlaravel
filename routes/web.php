@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,5 +68,6 @@ Route::group(['prefix'=>'manager',],function (){
 });
 
 
-
+Route::resource('categories', 'CategoryController');
+Route::resource('posts', 'PostController');
 

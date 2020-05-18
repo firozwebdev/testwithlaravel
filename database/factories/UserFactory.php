@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Admin;
+
 use App\Manager;
 use App\User;
 use Faker\Generator as Faker;
@@ -50,3 +51,4 @@ $factory->define(Manager::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
