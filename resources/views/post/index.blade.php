@@ -15,7 +15,7 @@
                 <th>Description</th>
                 <th>Photo</th>
                 <th>Date</th>
-                <th>Action</th>
+                <th style="width:162px;">Action</th>
             </tr>
         </thead>
         <tbody>

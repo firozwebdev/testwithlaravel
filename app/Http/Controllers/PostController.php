@@ -174,6 +174,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        unlink(public_path() . '/images/'. $post->photo);
         $post->delete();
         alert()->success('Post Deleted');
 
