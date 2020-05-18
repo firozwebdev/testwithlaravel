@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <h1>Post List page..</h1>
-    <a class="btn btn-primary" href="{{ route('categories.create') }}">Create</a>
+    <a class="btn btn-primary" href="{{ route('posts.create') }}">Create</a>
     @if(session('message'))
        <div class="alert alert-info"> {{session('message')}} </div>
     @endif
@@ -13,6 +13,7 @@
                 <th>Name</th>
                 <th>Category Name</th>
                 <th>Description</th>
+                <th>Photo</th>
                 <th>Date</th>
                 <th>Action</th>
             </tr>
@@ -24,6 +25,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->category->name }}</td>
+                    <td><img  style="width:50px;height:50px" src="{{ asset('images/'.$item->photo) }}" alt=""></td>
                     <td>{{ Str::limit($item->description, 100, '...') }}</td>
                     <td>{{ $item->created_at->format("d-m-Y") }}</td>
                     <td><a class="btn btn-warning" href=" {{ route('posts.edit', $item->id) }}">Edit</a> | 

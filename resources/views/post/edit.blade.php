@@ -12,7 +12,7 @@
                    
 
                  
-                  <form action="{{ route('posts.update', $post->id) }}" method="post">
+                  <form action="{{ route('posts.update', $post->id) }}" method="post"  enctype="multipart/form-data">
                     @csrf
                     @method('put')
                    
@@ -31,6 +31,12 @@
                           @endforeach
                       </select>
                       @if ($errors->has('title')) <p class="text-danger">{{ $errors->first('title') }}</p> @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Post Images</label>
+                        <input type="file" name="photo">     Previous images: <img style="with:100px;height:100px;" src="{{ asset('images/'.$post->photo)}}" alt="">
+                        @if ($errors->has('photo')) <p class="text-danger">{{ $errors->first('photo') }}</p> @endif
                     </div>
                     
                     <div class="form-group">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -39,20 +40,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+        //dd($request->all());
         try{
             $message = [
                 'title.required' => 'Post title  is required',
                 'category_id.required' => 'Category is required',
                 'category_id.categories' => 'Category is not  found',
                 'description.required' => 'Post Description  is required',
-                
-                
-                
+                'photo.required' => 'Please put an image',
+                'photo.mimes' => 'This is not an image',
             ];
             $rules = [
                 'title' => 'required',
-                'category_id' => 'required|categories:id',
-                'description' => 'required'
+                //'category_id' => 'required|categories:id',
+                'description' => 'required',
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
                 
                 //'createdBy' => 'required',
             ];
@@ -61,9 +64,20 @@ class PostController extends Controller
                 return redirect()->back()->withInput()->withErrors($validator);
             }
 
-           
+            if ($request->has('photo')) {
+                $imageName = time().'.'.$request->photo->extension();  
+   
+                $request->photo->move(public_path('images'), $imageName);
+                // Set user profile image path in database to filePath
+                
+            }
 
-            Post::create($request->all());
+            Post::create([
+                'category_id' => $request->category_id,
+                'title' => $request->title,
+                'description' => $request->description,
+                'photo' => $imageName,
+            ]);
             alert()->success('Post Created');
 
             return redirect()->route('posts.index');
@@ -108,23 +122,32 @@ class PostController extends Controller
         try{
             $message = [
                 'title.required' => 'Post title  is required',
-                'category_id.required' => 'Category is required',
-                'category_id.categories' => 'Category is not  found',
+                
                 'description.required' => 'Post Description  is required',
+                'photo.required' => 'Please put an image',
+                'photo.mimes' => 'This is not an image',
                 
                 
                 
             ];
             $rules = [
                 'title' => 'required',
-                'category_id' => 'required|categories:id',
-                'description' => 'required'
+                'description' => 'required',
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
                 
-                //'createdBy' => 'required',
+               
             ];
             $validator = Validator::make($request->all(), $rules, $message);
             if ($validator->fails()) {
                 return redirect()->back()->withInput()->withErrors($validator);
+            }
+
+            if ($request->has('photo')) {
+                $imageName = time().'.'.$request->photo->extension();  
+   
+                $request->photo->move(public_path('images'), $imageName);
+                // Set user profile image path in database to filePath
+                
             }
 
            
@@ -132,6 +155,7 @@ class PostController extends Controller
             $post->title = $request->title;
             $post->category_id = $request->category_id;
             $post->description = $request->description;
+            $post->photo = $imageName;
             $post->save();
             alert()->success('Post updated');
 
