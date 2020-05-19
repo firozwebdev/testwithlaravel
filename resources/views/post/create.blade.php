@@ -6,7 +6,7 @@
         <div class="col-md-8 col-sm-9 ">
            
             <div class="card">
-                <div class="card-header" style="font-weight:bold">Create Post</div>
+                <div class="card-header" style="font-weight:bold">Create Post </div>
 
                 <div class="card-body">
                    
