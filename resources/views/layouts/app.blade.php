@@ -54,13 +54,30 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
+
+                            @if(Route::current()->getName() === 'admin.login')
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('admin.login') }}">{{ __('Login') }}</a>
                                 </li>
+                            @elseif(Route::current()->getName() === 'manager.login')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('manager.login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+
+                            @endif
+
+                            @if (Route::has('register'))
+                                @if(Route::current()->getName() === 'login')
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    </li>
+
+                                @endif
+
                             @endif
                         @else
                             <li class="nav-item dropdown">
