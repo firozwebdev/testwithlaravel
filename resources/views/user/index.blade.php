@@ -19,13 +19,15 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->email }}</td>
-                        <td><a class="btn btn-warning" href=" {{ route('users.edit', $item->id) }}">Edit</a> | 
-                            <form style="display:inline" action="{{ route('users.destroy',$item->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <input style="width:75px;" class="btn btn-danger" type="submit" value="Delete" />
-                            </form>
-                        </td>
+                        @if(Auth::guard('manager')->check())
+                            <td><a class="btn btn-warning" href=" {{ route('users.edit', $item->id) }}">Edit</a> |
+                                <form style="display:inline" action="{{ route('users.destroy',$item->id) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <input style="width:75px;" class="btn btn-danger" type="submit" value="Delete" />
+                                </form>
+                            </td>
+                        @endif
                     </tr>   
                 @endforeach
                 

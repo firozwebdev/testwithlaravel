@@ -5,10 +5,24 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                @if(Route::current()->getName() === 'admin.login')
+                    <div class="card-header">{{ __('Admin Login') }}</div>
+
+                @elseif(Route::current()->getName() === 'manager.login')
+                    <div class="card-header">{{ __('Manager Login') }}</div>
+                @else
+                    <div class="card-header">{{ __('Login') }}</div>
+                @endif
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    @if(Route::current()->getName() === 'admin.login')
+                        <form method="POST" action="{{ route('admin.login') }}">
+                    @elseif(Route::current()->getName() === 'manager.login')
+                        <form method="POST" action="{{ route('manager.login') }}">
+                    @else
+                        <form method="POST" action="{{ route('login') }}">
+                    @endif
+
                         @csrf
 
                         <div class="form-group row">

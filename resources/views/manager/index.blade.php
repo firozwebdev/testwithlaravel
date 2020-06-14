@@ -21,13 +21,16 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->email }}</td>
                         <td>{{ $item->position }}</td>
-                        <td><a class="btn btn-warning" href=" {{ route('managers.edit', $item->id) }}">Edit</a> |
-                            <form style="display:inline" action="{{ route('managers.destroy',$item->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <input style="width:75px;" class="btn btn-danger" type="submit" value="Delete" />
-                            </form>
-                        </td>
+                        @if(Auth::guard('admin')->check())
+                            <td><a class="btn btn-warning" href=" {{ route('managers.edit', $item->id) }}">Edit</a> |
+                                <form style="display:inline" action="{{ route('managers.destroy',$item->id) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <input style="width:75px;" class="btn btn-danger" type="submit" value="Delete" />
+                                </form>
+                            </td>
+                        @endif
+
                     </tr>   
                 @endforeach
                 

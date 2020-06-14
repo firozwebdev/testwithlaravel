@@ -81,7 +81,10 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    @if(Auth::check())
+                        <h3>  Laravel where are you....</h3>
+                    @endif
+                  
                 </div>
 
                 <div class="links">

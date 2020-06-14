@@ -14,7 +14,12 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    You are logged in! as a 
+
+                    @if(Auth::check())
+                        <h3>User</h3>
+                    @endif
+                   
                 </div>
             </div>
         </div>
